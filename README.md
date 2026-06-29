@@ -1,1 +1,1 @@
-# mhub-microbiology-app
+# µhub-microbiology-app
