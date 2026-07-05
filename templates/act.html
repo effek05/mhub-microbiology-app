@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/focus.css') }}"/>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/corporatedesign.css') }}"/>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/userinfo.css') }}"/>
+        <title>&#181;Hub - Focus Mode</title>
+        <script src="https://kit.fontawesome.com/d5539b3f55.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+            <script src="{{url_for('static', filename='jscript/focus_trig.js')}}"></script>
+            
+            <div class="timer-container">
+                <h2>How long do you<br/>want to focus?</h2>
+                <input type="number" name="ty" id="minutesInput" placeholder="INSERTGET" min="1" max="180"/>
+                <br>
+                <a href=# id=test>
+                    <button class='btn btn-default' onclick="startTimer()" aria-label="Start timer">
+                        Lock in!
+                    </button>
+                </a>
+                <section id="countdownDisplay"></section>
+                
+                <p>Nutrients earned: <span id="nutri-counter">0</span></p>
+            </div>
+
+            <div class="image-region">
+            </div>
+
+            <p id="demo"></p>
+
+            <script>    
+            //document.getElementById("demo").innerHTML = act_tim;
+            </script>
+
+
+        </main>
+        <footer> 
+            <div class="butA right">
+                <a href="../profile">
+                    <i class="fa-brands fa-itunes-note"></i>
+                </a>
+            </div>
+            <div class="butA left">
+                <a href="../">
+                    <i class="fa-solid fa-x"></i>
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>

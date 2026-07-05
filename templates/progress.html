@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>&#181;Hub - Progress</title>
+        <script src="https://kit.fontawesome.com/d5539b3f55.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/progress.css') }}"/>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/corporatedesign.css') }}"/>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/userinfo.css') }}"/>
+    </head>
+    <body>
+        <header>
+            <div class="header-left">
+                <div class="header-profile">
+                    <a href="profile">
+                        <img src="{{url_for('static', filename='images/pb.jpg')}}" alt="profile picture" id="header-pb" border="1"/>
+                    </a>
+                </div>
+                <div class="header-user">
+                    <p id="header-name"></p>
+                    <p id="header-level">Level </p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-stats1">
+                    <p id="nutrients-count"><br/>Nutrients</p>
+                    <i class="fa-solid fa-leaf" id="leaf"></i>
+                </div>
+                <div class="header-stats2">
+                    <p id="species-count"><br/>Species</p>
+                    <i class="fa-solid fa-bacteria" id="bacterium"></i>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="app-region">
+                <div class="row one">
+                    <div class="row-one one-left">
+                        <div class="push third"></div>
+                        <p>Total time focussed:<br/></p>
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div class="row-one one-right">
+                        <div class="push third"></div>
+                        <p>Longest focus session:<br/></p>
+                    </div>
+                </div>
+                <div class="row row-two">
+                    <p id="eco-health">Ecosystem health: </p>
+                    <div id="eco-health-bar">
+                        <div id="eco-health-bar-inside"></div>
+                    </div>
+                </div>
+                <div class="row row-three">
+                    <p>The last 7 days:</p>
+                    <img src="{{url_for('static', filename='images/weeklydata.png')}}" alt="graph showing one week of statistics" id="sevendays"/>
+                </div>
+                <div class="row four">
+                    <div class="row-four left">
+                        <i class="fa-regular fa-calendar"></i>
+                        <p id="sessions">Sessions complete:<br/></p>
+                    </div>
+                    <div class="row-four middle">
+                        <i class="fa-solid fa-leaf" id="leaf"></i>
+                        <p id="nuts">Nutrients earned:<br/></p></div>
+                    <div class="row-four right">
+                    <i class="fa-solid fa-bacteria" id="bacterium"></i>
+                        <p id="specs">Species unlocked:<br/></p></div>
+                </div>
+            </div>
+        </main>
+        <footer>   
+            <nav>
+                <span><a href="../" id="hp-link">Home</a></span>
+                <div class="vl"></div>
+                <span><a href="species">Library</a></span>
+                <div class="vl"></div>
+                <span><a href="progress">Progress</a></span>
+            </nav>
+        </footer>
+    </body>
+</html>

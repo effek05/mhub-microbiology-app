@@ -39,6 +39,8 @@ def plot(x_y, real_value, timepoints):
 def plot_plate(predicted_relative_abundance):
 
     fig, ax = plt.subplots()
+    fig = plt.figure(figsize=(6,6))
+    ax = fig.add_subplot(1,1,1)
     colors = ["red", "blue", "green", "yellow", "black"]
 
     radius = 10
@@ -54,6 +56,26 @@ def plot_plate(predicted_relative_abundance):
 
     arbitrary_no = predicted_relative_abundance * 100
 
+    def generate_points_in_circle(npoints, radius, center):
+    
+        xpoints = []
+        ypoints = []
+    
+        while len(xpoints) < npoints:
+    
+            x = np.random.uniform(-radius, radius, npoints - len(xpoints))
+            y = np.random.uniform(-radius, radius, npoints - len(xpoints))
+    
+            distance = np.sqrt(x ** 2 + y ** 2)
+    
+            mask = distance < radius
+    
+            xpoints.append(x[mask] + center[0])
+            ypoints.append(y[mask] + center[1])
+    
+        return np.concatenate(xpoints), np.concatenate(ypoints)
+
+    
     for i in range(len(arbitrary_no)):
         x, y = generate_points_in_circle(math.ceil(arbitrary_no[i]), radius, (center_x, center_y))
         ax.scatter(x, y, color=colors[i], s = 3, marker="X")
@@ -65,6 +87,9 @@ def plot_plate(predicted_relative_abundance):
 
     for key, spine in ax.spines.items():
         spine.set_visible(False)
+
+    
+    ax.set_aspect('equal', adjustable='box')
 
     return fig
 

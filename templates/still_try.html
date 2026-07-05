@@ -1,0 +1,36 @@
+<!--
+Source - https://stackoverflow.com/a/53944884
+Posted by Chanrithisak Phok, modified by community. See post 'Timeline' for change history
+Retrieved 2026-07-02, License - CC BY-SA 4.0
+-->
+
+<!doctype html>
+<html lang="en">
+    # Source - https://stackoverflow.com/a/49335121
+# Posted by Gihan Gamage
+# Retrieved 2026-07-02, License - CC BY-SA 3.0
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+            $(function() {
+            $('a#test').bind('click', function() {
+                $.getJSON('/background_process_test',
+                    function() {
+                //do nothing
+                });
+            return false;
+        });
+        });
+    </script>
+
+
+    //button
+    <div class='container'>
+    <h3>Test</h3>
+        <form>
+            <a href=# id=test><button class='btn btn-default'>Test</button></a>
+        </form>
+
+    </div>
+
+</html>

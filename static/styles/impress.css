@@ -1,0 +1,50 @@
+html {
+    /*color: var(--temp-color4);*/
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0 0 0 0;
+    overflow: hidden;
+}   
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 120px;
+    background-color: var(--temp-color2);
+    margin: 0;
+}
+
+main {
+    text-align: center;
+    margin: auto;
+    color: var(--temp-color5);
+}
+
+p {
+    font-size: 1.75rem;
+}
+
+h1, h2 {
+    font-size: 3rem;
+}
+
+a:hover {
+    color: var(--temp-color1);
+}
+
+footer {
+    background: var(--temp-color3);
+    bottom: 0;
+    left: 0;
+    position: sticky;
+    padding: 100px 0 20px;
+    clip-path: shape(from 0 100%,vline to 0,curve to 4.17% 13px with 2.78% 9px,curve to 6.94% 16px with 5.56% 17px,curve to 9.72% 31.5px with 8.33% 15px,curve to 12.5% 39px with 11.11% 48px,curve to 15.28% 24px with 13.89% 30px,curve to 18.06% 21px with 16.67% 18px,curve to 20.83% 22px with 19.44% 24px,curve to 23.61% 21.5px with 22.22% 20px,curve to 26.39% 17px with 25% 23px,curve to 29.17% 7.5px with 27.78% 11px,curve to 31.94% 7px with 30.56% 4px,curve to 34.72% 17px with 33.33% 10px,curve to 37.5% 12.5px with 36.11% 24px,curve to 40.28% 19.5px with 38.89% 1px,curve to 43.06% 37.5px with 41.67% 38px,curve to 45.83% 27.5px with 44.44% 37px,curve to 48.61% 23.5px with 47.22% 18px,curve to 51.39% 18px with 50% 29px,curve to 54.17% 27px with 52.78% 7px,curve to 56.94% 42.5px with 55.56% 47px,curve to 59.72% 33.5px with 58.33% 38px,curve to 62.5% 33.5px with 61.11% 29px,curve to 65.28% 32px with 63.89% 38px,curve to 68.06% 20.5px with 66.67% 26px,curve to 70.83% 21.5px with 69.44% 15px,curve to 73.61% 20.5px with 72.22% 28px,curve to 76.39% 29px with 75% 13px,curve to 79.17% 47px with 77.78% 45px,curve to 81.94% 26.5px with 80.56% 49px,curve to 84.72% 17.5px with 83.33% 4px,curve to 87.5% 27.5px with 86.11% 31px,curve to 90.28% 22px with 88.89% 24px,curve to 93.06% 31.5px with 91.67% 20px,curve to 95.83% 33px with 94.44% 43px,curve to 100% 0 with 97.22% 23px,vline to 100%, hline to 0);
+    /*credit: https://css-tricks.com/complex-css-shapes-with-shape-function/ */
+}

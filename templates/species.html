@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://kit.fontawesome.com/d5539b3f55.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/species.css') }}"/>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/corporatedesign.css') }}"/>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/userinfo.css') }}"/>
+    <title>&#181;Hub - Species Library</title>
+    
+  </head>
+  <body>
+    <header>
+        <div class="header-left">
+            <div class="header-profile">
+                <a href="profile">
+                    <img src="{{url_for('static', filename='images/pb.jpg')}}" alt="profile picture" id="header-pb" border="1"/>
+                </a>
+            </div>
+            <div class="header-user">
+                <p id="header-name"></p>
+                <p id="header-level">Level </p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-stats1">
+                <p id="nutrients-count"><br/>Nutrients</p>
+                <i class="fa-solid fa-leaf" id="leaf"></i>
+            </div>
+            <div class="header-stats2">
+                <p id="species-count"><br/>Species</p>
+                <i class="fa-solid fa-bacteria" id="bacterium"></i>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="vaccines-grid">
+            <div class="v-card" onclick="openModal('Debaryomyces')">
+                <div class="v-name">Debaryomyces hansenii</div>
+                <p><span class="tag org" style='background: #e87dd4;'>yeast</span> <span class="tag p" style='background: #F54927; color: var(--temp-color5);'>pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Dh.png')}}" alt="Illustration of Debaryomyces hansenii" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Leucobacter')">
+                <div class="v-name">Leucobacter</div>
+                <p><span class="tag org" style='background: #8866d4;'>bacterium</span> <span class="tag p" style='background: #D4A626; color: var(--temp-color5);'>several</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Ls.png')}}" alt="Illustration of Leucobacter sp." class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Yarrowia')">
+                <div class="v-name">Yarrowia lipolytica</div>
+                <p><span class="tag org" style='background: #e87dd4;'>yeast</span> <span class="tag p" style='background: #38D426; color: var(--temp-color5);'>non-pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Yl.png')}}" alt="Illustration of Yarrowia lipolytica" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Geotrichum')">
+                <div class="v-name">Geotrichum candidum</div>
+                <p><span class="tag org" style='background: #e87dd4;'>yeast</span> <span class="tag p" style='background: #F54927; color: var(--temp-color5);'>pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Gc.png')}}" alt="Illustration of Geotrichum candidum" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Arthrobacter')">
+                <div class="v-name">Arthrobacter arilaitensis</div>
+                <p><span class="tag org" style='background: #8866d4;'>bacterium</span> <span class="tag p" style='background: #38D426; color: var(--temp-color5);'>non-pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Aa.png')}}" alt="Illustration of Arthrobacter arilaitensis" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Hafnia')">
+                <div class="v-name">Hafnia alvei</div>
+                <p><span class="tag org" style='background: #8866d4;'>bacterium</span> <span class="tag p" style='background: #38D426; color: var(--temp-color5);'>non-pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Ha.png')}}" alt="Illustration of Hafnia alvei" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Corynebacterium')">
+                <div class="v-name">Corynebacterium casei</div>
+                <p><span class="tag org" style='background: #8866d4;'>bacterium</span> <span class="tag p" style='background: #38D426; color: var(--temp-color5);'>non-pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Cc.png')}}" alt="Illustration of Corynebacterium casei" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Brevibacterium')">
+                <div class="v-name">Brevibacterium aurantiacum</div>
+                <p><span class="tag org" style='background: #8866d4;'>bacterium</span> <span class="tag p" style='background: #38D426; color: var(--temp-color5);'>non-pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Ba.png')}}" alt="Illustration of Brevibacterium aurantiacum" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+
+            <div class="v-card" onclick="openModal('Staphylococcus')">
+                <div class="v-name">Staphylococcus xylosus</div>
+                <p><span class="tag org" style="background: #8866d4;">bacterium</span> <span class="tag p" style='background: #38D426; color: var(--temp-color5);'>non-pathogenic</span> <span class="tag orig" >cheese</span></p>
+                <img src="{{url_for('static', filename='images/spec_Sx.png')}}" alt="Illustration of Staphylococcus xylosus" class="spec-img"/>
+                <div class="v-more">Learn more →</div>
+            </div>
+        </div>
+
+        <!-- MODAL -->
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+            <div class="modal-box">
+                <button class="modal-close" onclick="closeModalBtn()">✕</button>
+                <div id="modal-content"></div>
+            </div>
+        </div>
+    </main>
+    <footer>   
+        <nav>
+            <span><a href="../" id="hp-link">Home</a></span>
+            <div class="vl"></div>
+            <span><a href="species">Library</a></span>
+            <div class="vl"></div>
+            <span><a href="progress">Progress</a></span>
+        </nav>
+    </footer>
+    <script src="{{url_for('static', filename='jscript/species_zoom.js')}}"></script>
+  </body>
+</html>
