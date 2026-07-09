@@ -14,6 +14,7 @@ from iLV.utils import rmse
 from iLV.utils import plot
 from iLV.utils import plot_plate
 from iLV.utils import rmse_over_iters
+from iLV.utils import interaction_network
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -88,10 +89,6 @@ def iLV(relative_abundance, minutes, num_run, n0_est, num_iteration, output_dir,
             theta_estimate = linear_regression(data, n_tpoints, time_seg, n_species)
             theta_estimate = np.concatenate((theta_estimate, X))
 
-
-        fig1 = rmse_over_iters(distance)
-        fig1.savefig(f"{output_dir}_rmse_over_iters.svg")
-
         # subroutine 2
         def ode_model_resid(theta):
             """
@@ -141,13 +138,25 @@ def iLV(relative_abundance, minutes, num_run, n0_est, num_iteration, output_dir,
         end_time = tm.time()
         print(f"Run time: {end_time - start_time:.8f} seconds")
 
-    fig2 = plot(x_y[:, :-1], real_value, timepoints)
-    fig2.savefig(f"{output_dir}/abundance_over_time_{min_distance:.2f}_{method_used}.svg")
+    if os.path.exists(f"{output_dir}_rmse_over_iters.svg") == False:
+        fig1 = rmse_over_iters(distance)
+        fig1.savefig(f"{output_dir}_rmse_over_iters.svg")
 
-    tpoints = np.arange(timepoints[0], timepoints[-1]+timepoints[-1] / 180, timepoints[-1] / 180)
-    predicted_relative_abundance = odeint(func=gLV_relative, y0=theta[-(n_species+1):], t=tpoints, args=(theta,))
-    fig3 = plot_plate(predicted_relative_abundance[minutes, :-1])
-    fig3.savefig(f"{output_dir}/plate_{minutes}.svg")
+    if os.path.exists(f"{output_dir}/interaction_network.svg") == False:
+        betas = min_theta[n_species:-(n_species + 1)]
+        # Todo: Better if betas in matrix formation
+        fig2 = interaction_network(betas, list(df.columns)[1:])
+        fig2.savefig(f"{output_dir}/interaction_network.svg")
+
+    if os.path.exists(f"{output_dir}/abundance_over_time_{min_distance:.2f}_{method_used}.svg") == False:
+        fig3 = plot(x_y[:, :-1], real_value, timepoints)
+        fig3.savefig(f"{output_dir}/abundance_over_time_{min_distance:.2f}_{method_used}.svg")
+
+    if os.path.exists(f"{output_dir}/plate_{minutes}.svg") == False:
+        tpoints = np.arange(timepoints[0], timepoints[-1]+timepoints[-1] / 180, timepoints[-1] / 180)
+        predicted_relative_abundance = odeint(func=gLV_relative, y0=theta[-(n_species+1):], t=tpoints, args=(theta,))
+        fig4 = plot_plate(predicted_relative_abundance[minutes, :-1])
+        fig4.savefig(f"{output_dir}/plate_{minutes}.svg")
 
     return
 

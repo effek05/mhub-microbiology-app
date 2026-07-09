@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import networkx as nx
 
 from matplotlib.lines import Line2D
 
@@ -124,6 +125,31 @@ def rmse_over_iters(distance):
     ax.set_ylim(0, np.max(distance) * 1.1)
 
     return fig
+
+def interaction_network(betas, species_names):
+
+    # b12, b13, b14, b15, b21, b23, b24, b25, b31, b32, b34, b35, b41, b42, b43, b45, b51, b52, b53, b54
+    G = nx.Graph()
+
+    # Todo: https://networkx.org/documentation/stable/auto_examples/drawing/plot_weighted_graph.html
+    """
+    - make thickness of edge prop to weight of interaction
+    - make #FFD166 for inhibition and #1B98E0 for promotion
+    - only plot edge if bigger than min by atleast 3 times 
+    """
+    count = 0
+    for i in range(len(species_names)):
+        for j in range(len(species_names)):
+            if i != j:
+                G.add_edge(species_names[i], species_names[j], weight = betas[count])
+                count += 1
+
+    elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 0.5]
+    esmall = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] <= 0.5]
+
+    pos = nx.spring_layout(G, seed=7)
+
+    return
 
 
 
