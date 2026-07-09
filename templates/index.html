@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://kit.fontawesome.com/d5539b3f55.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/homepage.css') }}"/>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/corporatedesign.css') }}"/>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/userinfo.css') }}"/>
+    <title>&#181;Hub - Homepage</title>
+  </head>
+  <body>
+    <header>
+        <div class="header-left">
+            <div class="header-profile">
+                <a href="profile">
+                    <img src="{{url_for('static', filename='images/pb.jpg')}}" alt="profile picture" id="header-pb" border="1"/>
+                </a>
+            </div>
+            <div class="header-user">
+                <p id="header-name"></p>
+                <p id="header-level">Level </p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-stats1">
+                <p id="nutrients-count"><br/>Nutrients</p>
+                <i class="fa-solid fa-leaf" id="leaf"></i>
+            </div>
+            <div class="header-stats2">
+                <p id="species-count"><br/>Species</p>
+                <i class="fa-solid fa-bacteria" id="bacterium"></i>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!--space for python script-->
+        <div class="app-region">
+            <img src="{{url_for('static', filename='images/plate.png')}}" alt=""Microbes on a plate id="plate-img"/>
+            <div class="box">
+                <form action="focus" id="focus-div">
+                    <button id="focus-btn">Start Focus</button>
+                </form>
+            </div>
+            <p class="imp" id="back"><a href="https://mhub.m2ef.com/">Website</a></p>
+            <p class="imp" id="forth"><a href="impressum">Impressum</a></p>
+        </div>
+    </main>
+    <footer>   
+        <nav>
+            <span><a href="" id="hp-link">Home</a></span>
+            <div class="vl"></div>
+            <span><a href="species">Library</a></span>
+            <div class="vl"></div>
+            <span><a href="progress">Progress</a></span>
+        </nav>
+    </footer>
+  </body>
+</html>

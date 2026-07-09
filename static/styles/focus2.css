@@ -1,0 +1,259 @@
+/* general stuff */
+html {
+    /*color: var(--temp-color4);*/
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: linear-gradient(var(--temp-color5) 70px, var(--temp-color4) 70px, var(--temp-color4));
+
+    display: flex;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+/* timer */
+.timer-container {
+  text-align: center;
+  background: var(--temp-color2);
+  padding: 0 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  color: var(--temp-color1);
+}
+
+h2 {
+    font-size: 22px;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  width: 190px;
+  max-width: 90vw;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#countdownDisplay {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+/* buttons on top */
+header {
+  height: 70px;
+  width: min(446px, 100%);
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.butA {
+  border-radius: 50%;
+  padding: 10px;
+  aspect-ratio: 1 / 1;
+  color: var(--temp-color2);
+  font-size: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--temp-color2);
+  margin-top: 3px;
+}
+
+.left {
+  background-color: var(--temp-color4);
+  text-align: center;
+  margin: auto auto;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  left: 2%;
+}
+
+footer {
+  height: 70px;
+  width: min(446px, 100%);
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.right{ 
+  color: var(--temp-color2);
+  background-color: var(--temp-color4);
+  text-align: center;
+  margin: auto auto;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 2%;
+}
+
+
+/* basic image */
+
+
+.image-region {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 80%;
+  aspect-ratio: 1 / 1;
+  border: 4px solid var(--temp-color1);
+}
+
+.point0 {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+/*
+.changing {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 80%;
+  aspect-ratio: 1 / 1;
+  border: 4px solid var(--temp-color1);
+}
+  */
+
+
+
+
+
+/* media querys*/
+@media (min-width: 450px) {
+    body {
+        width: 450px;
+        height: 100vh;
+        margin: 0 auto;
+        border-right: 4px solid var(--temp-color5);
+        border-left: 4px solid var(--temp-color5);
+    }
+
+    html {
+        background: linear-gradient(90deg, var(--temp-color5), var(--temp-color4), var(--temp-color5));
+        z-index: -1;
+    }
+
+    .right {
+      right: 5%;
+    }
+
+    .left {
+      left: 5%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: var(--temp-color4);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  text-align: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: var(--temp-color5);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content img {
+  width: 90%;
+  border-radius: 5px;
+}
+
+/*
+
+.image-region {
+    width: 110%;
+    aspect-ratio: 1 / 1;
+    background-position: -25% -25%; 
+    
+    animation: pictures 100s step-start infinite;
+    background-size: cover;
+    border-radius: 50%;
+    border: 4px solid var(--temp-color1);
+}
+
+@keyframes pictures {
+  0% {
+    background-image: url("{{url_for('static', filename='images/pb.png')}}");
+  }
+  25% {
+    background-image: url(../images/plate_60.svg);
+  }
+  50% {
+    background-image: url(../images/plate_75.svg);
+  }
+  75% {
+    background-image: url(../images/plate_120.svg);
+  }
+  100% {
+    background-image: url(../images/plate_25.svg);
+  }
+
+}
+
+*/

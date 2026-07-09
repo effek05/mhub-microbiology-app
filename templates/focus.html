@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/focus2.css') }}"/>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/corporatedesign.css') }}"/>
+        <link rel="stylesheet" href= "{{ url_for('static',filename='styles/userinfo.css') }}"/>
+        <title>&#181;Hub - Focus Mode</title>
+        <script src="https://kit.fontawesome.com/d5539b3f55.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header>
+        </header>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type=text/javascript>
+                $(function() {
+                $('a#test').bind('click', function() {
+                    $.getJSON('/background_process_test',"ty="+minutesInput.value);
+                return false;
+            });
+            });
+        </script>
+        <main>
+            <div class="timer-container">
+                <h2>How long do you<br/>want to focus?</h2>
+                <input type="number" id="minutesInput" placeholder="In minutes" min="1" max="180"/>
+                <a href=# id=test>
+                    <button class='btn btn-default' onclick="startTimer(); rotat()" aria-label="Start timer">
+                        Lock in!
+                    </button>
+                </a>
+                <section id="countdownDisplay"></section>
+                
+                <p>Nutrients earned: <span id="nutri-counter">0</span></p>
+            </div>
+            <div class="image-region">
+                <img class="point0" id="genImg" src="{{ url_for('static', filename='images/plate.png') }}" alt="Sketch of microbes on a plate" />
+            </div>
+                <!--<img class="changing" id="myImg" alt="Model of microbes on a plate" />-->
+
+
+            
+             <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">
+                        &times;
+                    </span>
+                    <p>
+                        Time is up. Look what you managed to model:
+                    </p>
+                    <img id="modalImg" src="" alt="Image">
+                </div>
+            </div>
+
+        </main>
+        <footer> 
+            <div class="butA right">
+                <a href="../profile">
+                    <i class="fa-brands fa-itunes-note"></i>
+                </a>
+            </div>
+            <div class="butA left">
+                <a href="../">
+                    <i class="fa-solid fa-x"></i>
+                </a>
+            </div>
+        </footer>
+        <script src="{{url_for('static', filename='jscript/focus_trig.js')}}"></script>
+    </body>
+</html>
