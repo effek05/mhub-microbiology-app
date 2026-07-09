@@ -88,4 +88,17 @@ def generate_points_in_circle(npoints, radius, center):
 
     return np.concatenate(xpoints), np.concatenate(ypoints)
 
+def rmse_over_iters(distance):
+    fig, ax = plt.subplots()
+
+    x = np.arange(0, len(distance), 1)
+
+    ax.plot(x, distance, color = 'red', lw=1, alpha = 0.5)
+    ax.set_xlabel("Iteration")
+    ax.set_ylabel("RMSE")
+    ax.set_ylim(0, np.max(distance) * 1.1)
+
+    return fig
+
+
 
