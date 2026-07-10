@@ -29,11 +29,14 @@ def rmse(real_value, predicted_value):
 def plot(x_y, real_value, timepoints):
     fig, ax = plt.subplots()
     N = x_y.shape[1]
-    colors = ["red", "blue", "green", "yellow", "black"]
-    markers = Line2D.filled_markers[:N]
+    # TODO: here to match ninas drawings but change later
+    colors = ["#D65A0F", "#F59A23", "#95B681", "#0078F8", "#FF9000"]
     for i in range(N):
         ax.plot(timepoints, x_y[:, i], color=colors[i], lw=1, alpha=0.5)
-        ax.plot(timepoints, real_value.iloc[:, i], color=colors[i], marker=markers[i], linestyle="None")
+        ax.plot(timepoints, real_value.iloc[:, i], color=colors[i], marker="X", linestyle="None")
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
 
     return fig
 
@@ -42,7 +45,7 @@ def plot_plate(predicted_relative_abundance):
     fig, ax = plt.subplots()
     fig = plt.figure(figsize=(6,6))
     ax = fig.add_subplot(1,1,1)
-    colors = ["red", "blue", "green", "yellow", "black"]
+    colors = ["#D65A0F", "#F59A23", "#95B681", "#0078F8", "#FF9000"]
 
     radius = 10
     center_x, center_y = 0, 0
@@ -138,17 +141,35 @@ def interaction_network(betas, species_names):
     - only plot edge if bigger than min by atleast 3 times 
     """
     count = 0
+    betas = betas / sum(abs(betas))
+    min_beta = min(abs(betas)) * 5
     for i in range(len(species_names)):
         for j in range(len(species_names)):
             if i != j:
-                G.add_edge(species_names[i], species_names[j], weight = betas[count])
+                if abs(betas[count]) > min_beta:
+                    G.add_edge(species_names[i], species_names[j], weight = betas[count])
                 count += 1
-
-    elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 0.5]
-    esmall = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] <= 0.5]
 
     pos = nx.spring_layout(G, seed=7)
 
+    nx.draw_networkx_nodes(G, pos, node_size=700)
+
+    negative = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] < 0]
+    positive = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 0]
+
+    # edges
+    nx.draw_networkx_edges(G, pos, edgelist=elarge, width=6, edge_color='')
+    nx.draw_networkx_edges(
+        G, pos, edgelist=esmall, width=6, alpha=0.5, edge_color="b", style="dashed"
+    )
+
+    # node labels
+    nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif")
+    # edge weight labels
+    edge_labels = nx.get_edge_attributes(G, "weight")
+    nx.draw_networkx_edge_labels(G, pos, round(edge_labels, 2))
+
+    plt.show()
     return
 
 
