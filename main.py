@@ -79,7 +79,6 @@ def big(tim):
             theta_estimate = np.concatenate((theta_init, X))
 
             # 2nd step subroutine 1
-            # Todo: Plot decrease in rmse over iterations
             distance =  [None] * num_iteration
             distance_min = np.inf
             theta_min = theta_estimate

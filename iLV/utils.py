@@ -3,8 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import networkx as nx
-
-from matplotlib.lines import Line2D
+import matplotlib.patches
 
 def convert_to_relative_abundance(absolute_csv, outputdir):
     """
@@ -26,14 +25,21 @@ def convert_to_relative_abundance(absolute_csv, outputdir):
 def rmse(real_value, predicted_value):
     return np.sqrt(np.sum((np.array(np.array(real_value.iloc[:, :]) - predicted_value[:, :]))**2) / real_value.shape[0] / real_value.shape[1])
 
-def plot(x_y, real_value, timepoints):
+def plot(x_y, real_value, timepoints, species_names, method_used, min_distance):
     fig, ax = plt.subplots()
     N = x_y.shape[1]
     # TODO: here to match ninas drawings but change later
     colors = ["#D65A0F", "#F59A23", "#95B681", "#0078F8", "#FF9000"]
     for i in range(N):
-        ax.plot(timepoints, x_y[:, i], color=colors[i], lw=1, alpha=0.5)
-        ax.plot(timepoints, real_value.iloc[:, i], color=colors[i], marker="X", linestyle="None")
+        ax.plot(timepoints, x_y[:, i], color=colors[i], lw=1, label = f"Estimated {species_names[i]}")
+        ax.plot(timepoints, real_value.iloc[:, i], color=colors[i], marker="X", linestyle="None",  label = f"Observed {species_names[i]}")
+
+    ax.set_ylabel("Relative Abundance")
+    ax.set_xlabel("Time")
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    ax.set_title(f"Method used: {method_used}, RMSE:{min_distance:.3f}")
 
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -140,37 +146,46 @@ def interaction_network(betas, species_names):
     - make #FFD166 for inhibition and #1B98E0 for promotion
     - only plot edge if bigger than min by atleast 3 times 
     """
+    fig, ax = plt.subplots(figsize=(10, 10))
+    G = nx.DiGraph()
     count = 0
-    betas = betas / sum(abs(betas))
-    min_beta = min(abs(betas)) * 5
+    min_beta = min(abs(betas))
     for i in range(len(species_names)):
         for j in range(len(species_names)):
             if i != j:
-                if abs(betas[count]) > min_beta:
-                    G.add_edge(species_names[i], species_names[j], weight = betas[count])
+                if abs(betas[count]) > min_beta * 5:
+                    # Si
+                    G.add_weighted_edges_from([(species_names[j], species_names[i], betas[count])])
                 count += 1
 
-    pos = nx.spring_layout(G, seed=7)
+    pos = nx.circular_layout(G)
 
-    nx.draw_networkx_nodes(G, pos, node_size=700)
+    nx.draw_networkx_nodes(G, pos, node_size=5000, node_color='#0B4F6C', ax = ax)
 
     negative = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] < 0]
+    negative_weights = [d['weight'] / 1000 for (u, v, d) in G.edges(data=True) if d["weight"] < 0]
     positive = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 0]
-
+    positive_weights = [d['weight'] / 1000 for (u, v, d) in G.edges(data=True) if d["weight"] > 0]
     # edges
-    nx.draw_networkx_edges(G, pos, edgelist=elarge, width=6, edge_color='')
-    nx.draw_networkx_edges(
-        G, pos, edgelist=esmall, width=6, alpha=0.5, edge_color="b", style="dashed"
-    )
+
+    testArrow = matplotlib.patches.ArrowStyle.Fancy(head_length=1, head_width=1.5, tail_width=.1)
+    nx.draw_networkx_edges(G, pos, edgelist=negative, width = negative_weights, arrowsize= negative_weights,
+                           node_size=7000, connectionstyle='arc3, rad = 0.1', arrowstyle=testArrow,
+                           edge_color="red", ax = ax)
+    nx.draw_networkx_edges(G, pos, edgelist=positive, width = positive_weights, arrowsize= positive_weights,
+                           node_size=7000, connectionstyle='arc3, rad = 0.1', arrowstyle=testArrow,
+                           edge_color="green", ax = ax)
 
     # node labels
-    nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif")
+    nx.draw_networkx_labels(G, pos, font_size=37, font_family="sans-serif", font_color="#F6F7EB", ax = ax)
     # edge weight labels
-    edge_labels = nx.get_edge_attributes(G, "weight")
-    nx.draw_networkx_edge_labels(G, pos, round(edge_labels, 2))
+    # edge_labels = nx.get_edge_attributes(G, "weight")
+    # new_edge_labels = {key: round(value, 3) for key, value in edge_labels.items()}
+    # nx.draw_networkx_edge_labels(G, pos, new_edge_labels)
 
-    plt.show()
-    return
+    ax.axis('off')
+
+    return fig
 
 
 
