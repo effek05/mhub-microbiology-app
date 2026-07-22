@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import math
 import networkx as nx
 import matplotlib.patches
+import matplotlib as mpl
 
 def convert_to_relative_abundance(absolute_csv, outputdir):
     """
@@ -28,8 +29,10 @@ def rmse(real_value, predicted_value):
 def plot(x_y, real_value, timepoints, species_names, method_used, min_distance):
     fig, ax = plt.subplots()
     N = x_y.shape[1]
-    # TODO: here to match ninas drawings but change later
-    colors = ["#D65A0F", "#F59A23", "#95B681", "#0078F8", "#FF9000"]
+
+    cmap = mpl.colormaps['viridis']
+    colors = cmap(np.linspace(0, 1, N))
+
     for i in range(N):
         ax.plot(timepoints, x_y[:, i], color=colors[i], lw=1, label = f"Estimated {species_names[i]}")
         ax.plot(timepoints, real_value.iloc[:, i], color=colors[i], marker="X", linestyle="None",  label = f"Observed {species_names[i]}")
@@ -48,7 +51,6 @@ def plot(x_y, real_value, timepoints, species_names, method_used, min_distance):
 
 def plot_plate(predicted_relative_abundance):
 
-    fig, ax = plt.subplots()
     fig = plt.figure(figsize=(6,6))
     ax = fig.add_subplot(1,1,1)
     colors = ["#D65A0F", "#F59A23", "#95B681", "#0078F8", "#FF9000"]
@@ -137,36 +139,33 @@ def rmse_over_iters(distance):
 
 def interaction_network(betas, species_names):
 
-    # b12, b13, b14, b15, b21, b23, b24, b25, b31, b32, b34, b35, b41, b42, b43, b45, b51, b52, b53, b54
-    G = nx.Graph()
-
-    # Todo: https://networkx.org/documentation/stable/auto_examples/drawing/plot_weighted_graph.html
-    """
-    - make thickness of edge prop to weight of interaction
-    - make #FFD166 for inhibition and #1B98E0 for promotion
-    - only plot edge if bigger than min by atleast 3 times 
-    """
     fig, ax = plt.subplots(figsize=(10, 10))
     G = nx.DiGraph()
     count = 0
     min_beta = min(abs(betas))
-    for i in range(len(species_names)):
-        for j in range(len(species_names)):
-            if i != j:
-                if abs(betas[count]) > min_beta * 5:
-                    # Si
+    if len(species_names) > 3:
+        for i in range(len(species_names)):
+            for j in range(len(species_names)):
+                if i != j:
+                    if abs(betas[count]) > min_beta * 5:
+                        # Si
+                        G.add_weighted_edges_from([(species_names[j], species_names[i], betas[count])])
+                    count += 1
+    else:
+        for i in range(len(species_names)):
+            for j in range(len(species_names)):
+                if i != j:
                     G.add_weighted_edges_from([(species_names[j], species_names[i], betas[count])])
-                count += 1
+                    count += 1
 
     pos = nx.circular_layout(G)
-
+    normalize_weight = 10 ** (len(str(int(max(abs(betas))))) - 1)
     nx.draw_networkx_nodes(G, pos, node_size=5000, node_color='#0B4F6C', ax = ax)
 
     negative = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] < 0]
-    negative_weights = [d['weight'] / 1000 for (u, v, d) in G.edges(data=True) if d["weight"] < 0]
+    negative_weights = [d['weight'] / normalize_weight for (u, v, d) in G.edges(data=True) if d["weight"] < 0]
     positive = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 0]
-    positive_weights = [d['weight'] / 1000 for (u, v, d) in G.edges(data=True) if d["weight"] > 0]
-    # edges
+    positive_weights = [d['weight'] / normalize_weight for (u, v, d) in G.edges(data=True) if d["weight"] > 0]
 
     testArrow = matplotlib.patches.ArrowStyle.Fancy(head_length=1, head_width=1.5, tail_width=.1)
     nx.draw_networkx_edges(G, pos, edgelist=negative, width = negative_weights, arrowsize= negative_weights,
@@ -176,16 +175,17 @@ def interaction_network(betas, species_names):
                            node_size=7000, connectionstyle='arc3, rad = 0.1', arrowstyle=testArrow,
                            edge_color="green", ax = ax)
 
-    # node labels
     nx.draw_networkx_labels(G, pos, font_size=37, font_family="sans-serif", font_color="#F6F7EB", ax = ax)
-    # edge weight labels
-    # edge_labels = nx.get_edge_attributes(G, "weight")
-    # new_edge_labels = {key: round(value, 3) for key, value in edge_labels.items()}
-    # nx.draw_networkx_edge_labels(G, pos, new_edge_labels)
 
     ax.axis('off')
 
     return fig
 
-
-
+def foo(import_string):
+    _globals = {}
+    code = compile(import_string, '<string>', 'exec')
+    exec(code, _globals)
+    import sys
+    g = globals()
+    g.update(_globals)
+    sys.modules.update(_globals)
